@@ -52,16 +52,16 @@ export const notesReducer = (state = initialState, action: ActionsType) => {
     }
 }
 //actions
-export const deleteList = (listId: string) => ({type: DELETE_LIST, listId}as const)
-// @ts-ignore
-export const getState = () => ({type: GET_STATE, state: JSON.parse(localStorage.getItem("state"))}as const)
-export const pickOutNote = (payload:{listId: string, noteId:string, important: boolean}) => (
-    {type: PICK_OUT_NOTE, payload}as const)
-export const addList = (title: string) => ({type: ADD_LIST, title}as const)
-export const addNote = (payload:{title: string, listId: string, tags: string[]}) => ({type: ADD_NOTE, payload}as const)
-export const updateNote = (payload:{newTitle: string, listId: string, noteId: string, tags: string[]}) => ({type: UPDATE_NOTE, payload}as const)
-export const updateListName = (newListName: string, listId: string) => ({type: UPDATE_LIST_NAME, newListName, listId}as const)
-export const deleteNote = (listId: string, idNote: string) => ({type: DELETE_NOTE, listId, idNote}as const)
+export const deleteList = (listId: string) => ({type: DELETE_LIST, listId} as const)
+
+export const getState = () => ({type: GET_STATE, state: JSON.parse(localStorage.getItem("state") || '')} as const)
+export const pickOutNote = (payload: { listId: string, noteId: string, important: boolean }) => (
+    {type: PICK_OUT_NOTE, payload} as const)
+export const addList = (title: string) => ({type: ADD_LIST, title} as const)
+export const addNote = (payload: { title: string, listId: string, tags: string[] }) => ({type: ADD_NOTE, payload} as const)
+export const updateNote = (payload: { newTitle: string, listId: string, noteId: string, tags: string[] }) => ({type: UPDATE_NOTE, payload} as const)
+export const updateListName = (newListName: string, listId: string) => ({type: UPDATE_LIST_NAME, newListName, listId} as const)
+export const deleteNote = (listId: string, idNote: string) => ({type: DELETE_NOTE, listId, idNote} as const)
 
 //types
 export type InitialState = {
@@ -76,16 +76,16 @@ export type NotesType = {
     tags: string[]
 }
 type ActionsType = ReturnType<typeof deleteList>
-| ReturnType<typeof getState>
-| ReturnType<typeof pickOutNote>
-| ReturnType<typeof addList>
-| ReturnType<typeof addNote>
-| ReturnType<typeof updateNote>
-| ReturnType<typeof updateListName>
-| ReturnType<typeof deleteNote>
+    | ReturnType<typeof getState>
+    | ReturnType<typeof pickOutNote>
+    | ReturnType<typeof addList>
+    | ReturnType<typeof addNote>
+    | ReturnType<typeof updateNote>
+    | ReturnType<typeof updateListName>
+    | ReturnType<typeof deleteNote>
 
 // NOTES/ADD-LIST redux ducks
-const DELETE_LIST= "NOTE/DELETE_LIST"
+const DELETE_LIST = "NOTE/DELETE_LIST"
 const GET_STATE = "NOTE/GET_STATE"
 const ADD_LIST = "NOTE/ADD_LIST"
 const ADD_NOTE = "NOTE/ADD_NOTE"
