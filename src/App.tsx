@@ -1,25 +1,34 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, {useEffect, useState} from 'react';
 import './App.css';
+import {useDispatch, useSelector} from "react-redux";
+import {AddNewList} from "./components/addNewList/add-new-list";
+import {InitialState} from "./store/reduser";
+import {getState} from "./store/reduser";
+import {AppRootState} from "./store/store";
+import {Notes} from "./components/list-notes/notes";
+import i from "./images/png-transparent-content-creator-thumbnail.png"
 
 function App() {
+  const state = useSelector<AppRootState, InitialState[]>(state => state.notes)
+  const [create, setCreate] = useState(false)
+  const dispatch = useDispatch()
+  useEffect(() => {
+    dispatch(getState())
+  }, []);
+  const onClickHandler = ()=> {
+      setCreate(true)
+  }
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+      <div className="App">
+        {!create
+            ? <div><img src={i} onClick={onClickHandler} alt={"click on me"}/> Create new list</div>
+            : <AddNewList create={setCreate}/>}
+        <div className={"content"}>
+          {state.map(n => {
+            return <Notes key={n.listId} notes={n}/>
+          })}
+        </div>
+      </div>
   );
 }
 

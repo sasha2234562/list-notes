@@ -1,0 +1,21 @@
+.containerCreateNote {
+    display: flex;
+    justify-content: space-between;
+    margin: 5% 0;
+}
+
+.textFielD {
+    width: 75%;
+    min-height: 32px
+}
+.error{
+    color: red;
+    font-size: 21px;
+}
+.tags{
+    font-size: 31px;
+    font-family: Impact, fantasy;
+}
+.tags div{
+    color: #818080;
+}

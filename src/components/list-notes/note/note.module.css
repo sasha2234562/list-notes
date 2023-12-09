@@ -1,0 +1,31 @@
+.containerNote {
+    display: flex;
+    justify-content: space-between;
+    font-size: 26px;
+    width: 100%;
+    word-break: break-word;
+}
+
+.containerNoteInput {
+    width: 45vh;
+}
+
+.tags {
+    font-size: 21px;
+    font-family: Impact, fantasy;
+}
+
+.tags div {
+    color: #818080;
+}
+
+.starImportant {
+    color: yellow;
+    margin: 0 20px;
+    cursor: pointer;
+}
+.star {
+    color: grey;
+    margin: 0 20px;
+    cursor: pointer;
+}
