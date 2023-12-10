@@ -5,7 +5,7 @@ import { AddNewList } from "./components/addNewList/add-new-list";
 import { AppRootState, InitialState } from "./store/types";
 import { getState } from "./store/reduser";
 import { Notes } from "./components/list-notes/notes";
-import i from "./images/png-transparent-content-creator-thumbnail.png";
+import i from "./images/1024824.png";
 
 function App() {
   const state = useSelector<AppRootState, InitialState[]>((state) => state.notes);

@@ -62,7 +62,6 @@ export const Note = (props: { listId: string; note: NotesType }) => {
   return (
     <>
       <div className={n.containerNote}>
-        {/*<div>*/}
           <GradeIcon
             onClick={pickOutNoteHandler}
             className={note.important ? n.starImportant : n.star}
@@ -84,9 +83,8 @@ export const Note = (props: { listId: string; note: NotesType }) => {
             </span>
           )}
           {error && <div className={n.error}>If the note length should be at least 3 characters.</div>}
-        {/*</div>*/}
-        <IconButton aria-label="delete" size="small">
-          <DeleteIcon onClick={deleteNoteHandler} fontSize={"small"} />
+        <IconButton onClick={deleteNoteHandler} aria-label="delete" size="small">
+          <DeleteIcon fontSize={"small"} />
         </IconButton>
       </div>
       {update && !!tags.length && (
