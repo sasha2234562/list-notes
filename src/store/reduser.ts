@@ -1,4 +1,14 @@
 import { v1 } from "uuid";
+import {
+  ActionsType,
+  ADD_LIST,
+  ADD_NOTE, DELETE_LIST,
+  DELETE_NOTE,
+  GET_STATE, InitialState,
+  PICK_OUT_NOTE,
+  UPDATE_LIST_NAME,
+  UPDATE_NOTE
+} from "./types";
 
 const initialState: InitialState[] = [];
 export const notesReducer = (state = initialState, action: ActionsType) => {
@@ -20,10 +30,12 @@ export const notesReducer = (state = initialState, action: ActionsType) => {
           ? {
               ...l,
               notes: [
-                {id: v1(),
+                {
+                  id: v1(),
                   important: false,
                   title: action.payload.title,
-                  tags: action.payload.tags,},
+                  tags: action.payload.tags,
+                },
                 ...l.notes,
               ],
             }
@@ -94,11 +106,14 @@ export const notesReducer = (state = initialState, action: ActionsType) => {
 export const deleteList = (listId: string) =>
   ({ type: DELETE_LIST, listId }) as const;
 
-export const getState = () =>
-  ({
-    type: GET_STATE,
-    state: JSON.parse(localStorage.getItem("state") || ""),
-  }) as const;
+export const getState = () => {
+  const stateFromLS = localStorage.getItem('state');
+
+   return {
+      type: GET_STATE,
+        state: stateFromLS ? JSON.parse(localStorage.getItem("state") || "") : null,
+    } as const
+ };
 export const pickOutNote = (payload: {
   listId: string;
   noteId: string;
@@ -129,34 +144,4 @@ export const updateListName = (newListName: string, listId: string) =>
 export const deleteNote = (listId: string, idNote: string) =>
   ({ type: DELETE_NOTE, listId, idNote }) as const;
 
-//types
-export type InitialState = {
-  listName: "What to learn";
-  listId: string;
-  notes: NotesType[];
-};
-export type NotesType = {
-  id: string;
-  important: boolean;
-  title: string;
-  tags: string[];
-};
-type ActionsType =
-  | ReturnType<typeof deleteList>
-  | ReturnType<typeof getState>
-  | ReturnType<typeof pickOutNote>
-  | ReturnType<typeof addList>
-  | ReturnType<typeof addNote>
-  | ReturnType<typeof updateNote>
-  | ReturnType<typeof updateListName>
-  | ReturnType<typeof deleteNote>;
 
-// NOTES/ADD-LIST redux ducks
-const DELETE_LIST = "NOTE/DELETE_LIST";
-const GET_STATE = "NOTE/GET_STATE";
-const ADD_LIST = "NOTE/ADD_LIST";
-const ADD_NOTE = "NOTE/ADD_NOTE";
-const PICK_OUT_NOTE = "NOTE/PICK_OUT_NOTE";
-const UPDATE_NOTE = "NOTE/UPDATE_NOTE";
-const UPDATE_LIST_NAME = "NOTE/UPDATE_LIST_NAME";
-const DELETE_NOTE = "NOTE/DELETE_NOTE";

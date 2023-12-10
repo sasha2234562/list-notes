@@ -3,13 +3,9 @@ import React, { ChangeEvent, useState } from "react";
 import { useDispatch } from "react-redux";
 import n from "./note.module.css";
 import DeleteIcon from "@mui/icons-material/Delete";
-import {
-  deleteNote,
-  NotesType,
-  pickOutNote,
-  updateNote,
-} from "../../../store/reduser";
+import { deleteNote, pickOutNote, updateNote } from "../../../store/reduser";
 import GradeIcon from "@mui/icons-material/Grade";
+import { NotesType } from "../../../store/types";
 
 export const Note = (props: { listId: string; note: NotesType }) => {
   const { listId, note } = props;
@@ -17,6 +13,7 @@ export const Note = (props: { listId: string; note: NotesType }) => {
   const [update, setUpdate] = useState(false);
   const [valueNote, setValueNote] = useState(note.title);
   const [tags, setTags] = useState<string[]>(note.tags);
+  const [error, SetError] = useState<boolean>(false);
   const dispatch = useDispatch();
 
   const updateNoteHandler = () => {
@@ -25,7 +22,6 @@ export const Note = (props: { listId: string; note: NotesType }) => {
   const changeNoteHandler = (e: ChangeEvent<HTMLInputElement>) => {
     const newValue = e.currentTarget.value;
     setValueNote(newValue);
-
     setTags(() => {
       // Используем метод match для поиска всех подстрок в строке newValue,
       // которые соответствуют регулярному выражению /#(\w+)/g.
@@ -36,15 +32,23 @@ export const Note = (props: { listId: string; note: NotesType }) => {
     });
   };
   const onBlurHandler = () => {
-    dispatch(
-      updateNote({
-        newTitle: valueNote,
-        listId: listId,
-        noteId: note.id,
-        tags,
-      }),
-    );
-    setUpdate(false);
+    if (valueNote.length <= 3) {
+      // minimum number of characters for a note
+      debugger;
+      SetError(true);
+      setUpdate(true);
+    } else {
+      dispatch(
+        updateNote({
+          newTitle: valueNote,
+          listId: listId,
+          noteId: note.id,
+          tags,
+        }),
+      );
+      SetError(false);
+      setUpdate(false);
+    }
   };
   const deleteNoteHandler = () => {
     dispatch(deleteNote(listId, note.id));
@@ -58,13 +62,14 @@ export const Note = (props: { listId: string; note: NotesType }) => {
   return (
     <>
       <div className={n.containerNote}>
-        <div>
+        {/*<div>*/}
           <GradeIcon
             onClick={pickOutNoteHandler}
             className={note.important ? n.starImportant : n.star}
           />
           {update ? (
             <TextField
+              error={error}
               className={n.containerNoteInput}
               autoFocus
               id="standard-basic"
@@ -74,11 +79,12 @@ export const Note = (props: { listId: string; note: NotesType }) => {
               onBlur={onBlurHandler}
             />
           ) : (
-            <span style={{ width: "50%" }} onDoubleClick={updateNoteHandler}>
+            <span onDoubleClick={updateNoteHandler}>
               {props.note.title}
             </span>
           )}
-        </div>
+          {error && <div className={n.error}>If the note length should be at least 3 characters.</div>}
+        {/*</div>*/}
         <IconButton aria-label="delete" size="small">
           <DeleteIcon onClick={deleteNoteHandler} fontSize={"small"} />
         </IconButton>
@@ -87,8 +93,10 @@ export const Note = (props: { listId: string; note: NotesType }) => {
         <div className={n.tags}>
           Tags:
           <br />{" "}
-          {tags.map((t) => (
-            <div className={n.tags}>{t}</div>
+          {tags.map((t, index) => (
+            <div key={index} className={n.tags}>
+              {t}
+            </div>
           ))}
         </div>
       )}

@@ -4,21 +4,22 @@ import e from "./editable-span.module.css";
 import { useDispatch } from "react-redux";
 import { updateListName } from "../../store/reduser";
 
-export const EditableSpan = (props: any) => {
+export const EditableSpan = (props: { listId: string; listName: string }) => {
+  const { listId, listName } = props;
   const [update, setUpdate] = useState(false);
-  const [value, setValue] = useState(props.listName);
+  const [value, setValue] = useState(listName);
   const dispatch = useDispatch();
   const changeHandler = (e: ChangeEvent<HTMLInputElement>) => {
     setValue(e.currentTarget.value);
   };
   const onBlurHandler = () => {
     setUpdate(false);
-    dispatch(updateListName(value, props.listId));
+    dispatch(updateListName(value, listId));
   };
   return (
     <div className={e.editableSpanContainer}>
       {!update ? (
-        <h3 onDoubleClick={() => setUpdate(true)}>{props.listName}</h3>
+        <h3 onDoubleClick={() => setUpdate(true)}>{listName}</h3>
       ) : (
         <TextField
           autoFocus

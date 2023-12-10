@@ -6,7 +6,6 @@ const rootReducer = combineReducers({
 });
 export const store = createStore(rootReducer);
 
-export type AppRootState = ReturnType<typeof store.getState>;
 
 store.subscribe(() => {
   localStorage.setItem("state", JSON.stringify(store.getState()));

@@ -2,16 +2,14 @@ import React, { useEffect, useState } from "react";
 import "./App.css";
 import { useDispatch, useSelector } from "react-redux";
 import { AddNewList } from "./components/addNewList/add-new-list";
-import { InitialState } from "./store/reduser";
+import { AppRootState, InitialState } from "./store/types";
 import { getState } from "./store/reduser";
-import { AppRootState } from "./store/store";
 import { Notes } from "./components/list-notes/notes";
 import i from "./images/png-transparent-content-creator-thumbnail.png";
 
 function App() {
-  const state = useSelector<AppRootState, InitialState[]>(
-    (state) => state.notes,
-  );
+  const state = useSelector<AppRootState, InitialState[]>((state) => state.notes);
+
   const [create, setCreate] = useState(false);
   const dispatch = useDispatch();
   useEffect(() => {

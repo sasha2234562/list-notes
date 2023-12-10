@@ -5,8 +5,9 @@ import { Note } from "./note/note";
 import n from "./notes.module.css";
 import { IconButton } from "@mui/material";
 import { useDispatch } from "react-redux";
-import { deleteList, InitialState } from "../../store/reduser";
+import { deleteList } from "../../store/reduser";
 import DeleteIcon from "@mui/icons-material/Delete";
+import { InitialState } from "../../store/types";
 
 export const Notes = (props: { notes: InitialState }) => {
   const notes: InitialState = props.notes;

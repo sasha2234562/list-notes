@@ -1,13 +1,14 @@
 .containerNote {
     display: flex;
     justify-content: space-between;
+    align-items: center;
     font-size: 26px;
     width: 100%;
     word-break: break-word;
 }
 
 .containerNoteInput {
-    width: 45vh;
+    width: 65vh;
 }
 
 .tags {
@@ -24,8 +25,14 @@
     margin: 0 20px;
     cursor: pointer;
 }
+
 .star {
     color: grey;
     margin: 0 20px;
     cursor: pointer;
+}
+
+.error {
+    color: red;
+    font-size: 13px;
 }
