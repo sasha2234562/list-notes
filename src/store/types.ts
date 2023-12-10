@@ -23,7 +23,6 @@ export type NotesType = {
   title: string;
   tags: string[];
 };
-export const GET_STATE = "NOTE/GET_STATE";
 export type ActionsType =
   | ReturnType<typeof deleteList>
   | ReturnType<typeof getState>
@@ -34,7 +33,8 @@ export type ActionsType =
   | ReturnType<typeof updateListName>
   | ReturnType<typeof deleteNote>;
 
-// NOTES/ADD-LIST redux ducks
+//  redux ducks
+export const GET_STATE = "NOTE/GET_STATE";
 export const DELETE_LIST = "NOTE/DELETE_LIST";
 export const ADD_LIST = "NOTE/ADD_LIST";
 export const ADD_NOTE = "NOTE/ADD_NOTE";
